@@ -65,7 +65,7 @@ test_features_matrix = test_features_df.to_numpy()
 train_targets_vector = train_targets_df.to_numpy()
 test_targets_vector = test_targets_df.to_numpy()
 
-# TRAINING OF PERCEPTRON
+# TRAINING OF ADALINE
 
 # function to test if the predicted value is wrong, if it is then return a boolean flag to add to the misclassification count for the iteration and also return the weight correction which is the multiplication of the scalar yi, the row vector xi, and a class frequency correction factor (496/759) for -1 class which is less frequent or (263/759) for +1 class which is more frequent 
 # if prediction is right, the weight correction is zero
@@ -126,15 +126,17 @@ training_percentage_error_at_each_iteration = (100/train_targets_vector.size) * 
 iteration_numbers = np.array(list_iteration_numbers)
 plt.figure()
 plt.plot(iteration_numbers,training_percentage_error_at_each_iteration)
-plt.title("ADALINE training error vs iterations, learning rate = 0.01")
+plt.title("ADALINE training error vs iterations, learning rate=0.01")
 plt.xlabel("Iteration")
 plt.ylabel("Training error (%)")
-plt.ylim(0,100)
+plt.ylim(0,85)
+plt.xlim(list_iteration_numbers[0],list_iteration_numbers[-1]+1)
+plt.grid()
 plt.savefig("adaline_training_error_vs_iterations.png", format='png')
 
 print("The ADALINE training error is: " + str(round(100*misclassification_count/train_targets_vector.size,1)) + " %")
 
-# TESTING OF PERCEPTRON
+# TESTING OF ADALINE
 
 # count the number of misclassifications when the perceptron model with the trained weights is applied to the test daata 
 test_misclassification_count = 0
