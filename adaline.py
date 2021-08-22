@@ -3,7 +3,7 @@
 Author: Pablo Nicolas Blanco
 Student ID: a1609603
 
-Perceptron Algorithm for FoDL Assignment 1
+ADALINE Algorithm for FoDL Assignment 1
 """
 
 import pandas as pd
@@ -76,9 +76,9 @@ def check_prediction_and_return_weight_correction_for_one_sample(yi, xi_vector, 
     if (yi*np.dot(xi_vector,w_vector) < 0):
         results[0] = True
         if (yi == 1):
-            results[1] = (263/759)*yi*xi_vector  # class frequency correction factor (263/759) for +1 class which is more frequent
+            results[1] = (263/759)*(yi - np.dot(xi_vector,w_vector))*xi_vector  # class frequency correction factor (263/759) for +1 class which is more frequent
         else:
-            results[1] = (496/759)*yi*xi_vector # class frequency correction factor (496/759) for -1 class which is less frequent
+            results[1] = (496/759)*(yi - np.dot(xi_vector,w_vector))*xi_vector # class frequency correction factor (496/759) for -1 class which is less frequent
     
     return results
 
@@ -92,7 +92,7 @@ w_vector = np.array([random(),random(),random(),random(),random(),random(),rando
 eta = 0.01
 
 # at each iteration of the algorithm, iterate through all the samples and call the function for every sample, 
-num_iterations = 3000 # (including the zeroth iteration)
+num_iterations = 2500 # (including the zeroth iteration)
 list_iteration_numbers = []
 list_misclassification_counts_at_each_iteration = []
 
@@ -126,13 +126,13 @@ training_percentage_error_at_each_iteration = (100/train_targets_vector.size) * 
 iteration_numbers = np.array(list_iteration_numbers)
 plt.figure()
 plt.plot(iteration_numbers,training_percentage_error_at_each_iteration)
-plt.title("Perceptron training error vs iterations, learning rate = 0.01")
+plt.title("ADALINE training error vs iterations, learning rate = 0.01")
 plt.xlabel("Iteration")
 plt.ylabel("Training error (%)")
 plt.ylim(0,100)
-plt.savefig("perceptron_training_error_vs_iterations.png", format='png')
+plt.savefig("adaline_training_error_vs_iterations.png", format='png')
 
-print("The perceptron training error is: " + str(round(100*misclassification_count/train_targets_vector.size,1)) + " %")
+print("The ADALINE training error is: " + str(round(100*misclassification_count/train_targets_vector.size,1)) + " %")
 
 # TESTING OF PERCEPTRON
 
@@ -148,4 +148,4 @@ for i in range(test_targets_vector.size):
     if test_results_list[0]:
         test_misclassification_count += 1
         
-print("The perceptron test error is: " + str(round(100*test_misclassification_count/test_targets_vector.size,1)) + " %")
+print("The ADALINE test error is: " + str(round(100*test_misclassification_count/test_targets_vector.size,1)) + " %")
